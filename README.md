@@ -56,35 +56,41 @@ Weather Wise/
    cd weather-wise
    ```
 
-2. **Setup the Server**
+2. **Install all dependencies**
+   Install all dependencies for both client and server with a single command from the root folder:
    ```bash
-   cd server
-   npm install
-   ```
-
-3. **Setup the Client**
-   ```bash
-   cd ../client
-   npm install
+   npm run install-all
    ```
 
 ### Running the Application
 
-To run the application, you need to start both the backend server and the frontend client.
+#### Production Mode (Unified Single-Port Deployment)
+To run the production build where the Express server serves both the API and the React frontend on a single port (3001):
+1. **Build both projects**:
+   ```bash
+   npm run build-all
+   ```
+2. **Start the unified server**:
+   ```bash
+   npm start
+   ```
+   The application will be available at `http://localhost:3001`.
 
-1. **Start the Backend**
+#### Development Mode (Concurrent Multi-Port)
+To run in development with hot-reloading:
+1. **Start the backend server** (in one terminal tab):
    ```bash
    cd server
    npm run dev
    ```
    The server will start at `http://localhost:3001`.
 
-2. **Start the Frontend**
+2. **Start the frontend client** (in another terminal tab):
    ```bash
    cd client
    npm run dev
    ```
-   The application will be available at `http://localhost:5173`.
+   The frontend will be available at `http://localhost:5173`.
 
 ## 📊 API Usage
 
