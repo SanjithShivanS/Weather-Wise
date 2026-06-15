@@ -2,6 +2,8 @@
 
 Weather Wise is a modern, full-stack weather forecasting application that provides users with real-time weather updates, detailed 7-day forecasts, and historical weather statistics. Built with a focus on clean UI and interactive data visualization, it helps users stay informed about weather conditions across the globe.
 
+🔗 **Live Link**: [https://weather-wise-scta.onrender.com](https://weather-wise-scta.onrender.com)
+
 ![Weather Wise Preview](client/src/assets/hero.png)
 
 ## 🚀 Features
@@ -27,6 +29,23 @@ Weather Wise is a modern, full-stack weather forecasting application that provid
 ### Backend
 - **Node.js & Express**: A robust proxy server to handle API requests and prevent CORS issues.
 - **Open-Meteo API**: Leveraging free, high-quality meteorological data.
+
+## ⚙️ How It Works (Architecture)
+
+Weather Wise is designed with a **decoupled monorepo architecture** that compiles into a single, unified port deployment for production:
+
+1. **Express Server API Proxy**:
+   - The Node.js Express backend (`server/index.ts`) acts as a proxy for the third-party **Open-Meteo APIs**.
+   - The backend exposes local endpoints under `/api` (`/api/geocoding`, `/api/weather`, and `/api/stats`) and forwards requests to the target APIs. This avoids CORS issues on the client side.
+
+2. **Unified Single-Port Hosting**:
+   - In production, instead of running separate servers for frontend and backend, the Express server serves the compiled React client static assets from the `client/dist` directory using `express.static()`.
+   - Any non-API route request falling on the server is caught by a wildcard route (`app.get('*any')`) and falls back to `index.html` (supporting Single Page Application (SPA) routing).
+
+3. **Dynamic Environment API Endpoints**:
+   - The frontend API service (`client/src/services/api.ts`) automatically switches its base URL using Vite's `import.meta.env.DEV` environment check:
+     - **Development**: Calls `http://localhost:3001/api` (allowing hot-reloading frontend on port `5173`).
+     - **Production**: Calls relative `/api` endpoints directly on the same domain and port hosting the app.
 
 ## 📂 Project Structure
 
