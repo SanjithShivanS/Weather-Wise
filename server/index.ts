@@ -2,6 +2,11 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -55,6 +60,15 @@ app.get('/api/stats', async (req: Request, res: Response) => {
     console.error('Stats error:', error);
     res.status(500).json({ error: 'Failed to fetch statistical data' });
   }
+});
+
+// Serve static files from the React client build directory
+const clientBuildPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientBuildPath));
+
+// Fallback all other GET requests to React's index.html (SPA routing)
+app.get('*any', (req: Request, res: Response) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
