@@ -1,8 +1,9 @@
 import React from 'react';
 import { CloudRain, Sun, Cloud, CloudLightning, CloudSnow } from 'lucide-react';
+import type { WeatherData } from '../types';
 
 interface ForecastProps {
-  daily: any;
+  daily: WeatherData['daily'] | undefined;
 }
 
 const getWeatherIcon = (code: number) => {

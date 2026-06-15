@@ -1,8 +1,9 @@
 import React from 'react';
 import { Thermometer, Wind, Droplets, Cloud, Sunrise, Sunset, Sun } from 'lucide-react';
+import type { WeatherData } from '../types';
 
 interface CurrentWeatherProps {
-  data: any;
+  data: WeatherData | null;
   locationName: string;
 }
 

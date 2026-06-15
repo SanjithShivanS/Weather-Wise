@@ -11,9 +11,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import type { StatData } from '../types';
 
 interface WeatherChartsProps {
-  data: any[];
+  data: StatData[];
   title: string;
 }
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Calendar, Thermometer, Droplets, Wind, CloudRain } from 'lucide-react';
+import type { WeatherData } from '../types';
 
 interface TomorrowPredictionProps {
-  daily: any;
+  daily: WeatherData['daily'] | undefined;
 }
 
 const TomorrowPrediction: React.FC<TomorrowPredictionProps> = ({ daily }) => {

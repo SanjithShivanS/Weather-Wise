@@ -7,27 +7,27 @@ import TomorrowPrediction from './components/TomorrowPrediction';
 import Statistics from './components/Statistics';
 import { getWeather } from './services/api';
 import { CloudSun } from 'lucide-react';
+import type { WeatherData } from './types';
 
 function App() {
   const [location, setLocation] = useState({ lat: 51.5074, lon: -0.1278, name: 'London' });
-  const [weatherData, setWeatherData] = useState<any>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchWeather = async () => {
+      setLoading(true);
+      try {
+        const data = await getWeather(location.lat, location.lon);
+        setWeatherData(data);
+      } catch (error) {
+        console.error('Error fetching weather:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchWeather();
-  }, [location]);
-
-  const fetchWeather = async () => {
-    setLoading(true);
-    try {
-      const data = await getWeather(location.lat, location.lon);
-      setWeatherData(data);
-    } catch (error) {
-      console.error('Error fetching weather:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [location.lat, location.lon]);
 
   const handleSelectLocation = (lat: number, lon: number, name: string) => {
     setLocation({ lat, lon, name });

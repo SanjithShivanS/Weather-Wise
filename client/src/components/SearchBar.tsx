@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { geocode } from '../services/api';
+import type { GeocodingResult } from '../types';
 
 interface SearchBarProps {
   onSelectLocation: (lat: number, lon: number, name: string) => void;
@@ -8,7 +9,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSelectLocation }) => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<GeocodingResult[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -36,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSelectLocation }) => {
           className="search-input"
         />
         <button type="submit" className="search-button">
-          <Search size={20} />
+          {loading ? <div className="spinner-small"></div> : <Search size={20} />}
         </button>
       </form>
       {results.length > 0 && (
